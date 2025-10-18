@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranking - Avaliações</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+</head>
+<body>
+
+    <div id="ranking-container">
+        <h1>✨ RANKING ✨</h1>
+        <p>Avaliações!</p>
+
+        <div id="crachas-ranking" class="ranking-grid">
+            </div>
+    </div>
+
+
+    <div id="sucesso-container" class="hidden">
+        <div class="sucesso-box">
+            <span class="pixel-icon grande">🎉</span>
+            <h2>AVALIAÇÃO FEITA COM SUCESSO!</h2>
+            <p id="nome-sucesso">Obrigado por reconhecer o trabalho.</p>
+            
+            <button onclick="window.location.href = BASE_PATH + '/'">Ver Ranking</button>
+        </div>
+    </div>
+
+    <script src="firebase-config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
