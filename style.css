@@ -1,0 +1,199 @@
+/* RESET BÁSICO E CONFIGURAÇÃO DA FONTE PIXEL */
+body {
+    font-family: 'Press Start 2P', cursive;
+    background-color: #282c34; /* Fundo escuro */
+    color: #ffae00; /* Texto verde neon/pixel */
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+h1 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px #000000;
+}
+
+p {
+    margin-bottom: 30px;
+}
+
+/* UTILITÁRIO */
+.hidden {
+    display: none !important;
+}
+
+/* ============================================== */
+/* ESTILO GERAL DE PIXEL ART E RESPONSIVIDADE */
+/* ============================================== */
+
+/* Container Principal do Ranking */
+.ranking-grid {
+    display: grid;
+    /* Configuração padrão para desktop: 3 colunas */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* MEDIA QUERIES PARA RESPONSIVIDADE */
+
+/* Tablets (ex: até 1024px) */
+@media (max-width: 1024px) {
+    .ranking-grid {
+        /* Tablets: 2 colunas */
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    h1 {
+        font-size: 1.2rem;
+    }
+}
+
+/* Celulares (ex: até 600px) */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+    .ranking-grid {
+        /* Celulares: 1 coluna */
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    h1 {
+        font-size: 1rem;
+    }
+    .cracha-bg {
+        width: 100%; /* Ocupa a largura total na coluna */
+        max-width: 300px; /* Limite em telas grandes */
+        margin: 0 auto;
+    }
+}
+
+
+/* ============================================== */
+/* ESTILO DOS CRACHÁS */
+/* ============================================== */
+
+.cracha-item {
+    background-color: #000000;
+    border: 5px solid #ffae01;
+    padding: 10px;
+    border-radius: 0; /* Estilo quadrado de pixel */
+    box-shadow: 4px 4px 0 #ffae01; /* Sombra pixel */
+    transition: transform 0.2s ease-in-out;
+}
+
+.cracha-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 8px 8px 0 #aa6000;
+}
+
+/* O contêiner de imagem e ícones */
+.cracha-bg {
+    position: relative;
+    width: 100%;
+    /* Mantém a proporção horizontal para o crachá: Largura > Altura */
+    padding-top: 50%; /* Altura é 50% da largura (proporção 2:1) - Ajuste conforme sua imagem */
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.cracha-imagem {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Garante que a imagem cubra o espaço */
+    image-rendering: pixelated; /* Tenta manter o aspecto pixelado da imagem, se for uma! */
+    border: 2px solid #ffae00;
+}
+
+.nome-funcionario {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ============================================== */
+/* ESTILO DOS ÍCONES DE AVALIAÇÃO (AJUSTADO) */
+/* ============================================== */
+
+.icones-avaliacao {
+    position: absolute;
+    /* Define o canto superior direito como ponto de partida */
+    top: 5%;
+    right: 5%;
+    
+    /* Configuração Flex para quebrar a linha */
+    display: flex;
+    flex-direction: row; /* Ícones lado a lado */
+    flex-wrap: wrap; /* PERMITE QUE AS ESTRELAS QUEBREM PARA A PRÓXIMA LINHA */
+    justify-content: flex-end; /* Alinha as estrelas à direita */
+    align-items: flex-start; /* Alinha as linhas de estrelas ao topo */
+    
+    gap: 3px;
+    max-width: 90%; /* Aumenta a área de atuação para estrelas longas */
+    z-index: 10; 
+}
+
+.pixel-icon {
+    /* REMOVE O TAMANHO PADRÃO AQUI! */
+    /* O tamanho agora será definido dinamicamente pelo JavaScript via estilo inline */
+    /* O padrão de 1.2rem será aplicado pelo JS se a contagem for baixa. */
+    line-height: 1;
+    text-shadow: 1px 1px #000000;
+}
+
+.pixel-icon.grande {
+    /* Mantém para o ícone de sucesso na outra tela */
+    font-size: 3rem; 
+}
+
+/* ============================================== */
+/* ESTILO DA PÁGINA DE SUCESSO */
+/* ============================================== */
+#sucesso-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+.sucesso-box {
+    background-color: #000000;
+    border: 5px solid #00ff00;
+    padding: 40px;
+    box-shadow: 8px 8px 0 #00aa00;
+    max-width: 90%;
+}
+
+.sucesso-box h2 {
+    color: #ffff00; /* Amarelo de destaque */
+    margin-top: 10px;
+    font-size: 1.1rem;
+}
+
+.sucesso-box button {
+    font-family: 'Press Start 2P', cursive;
+    background-color: #ff0000;
+    color: #ffffff;
+    border: 3px solid #000000;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+    box-shadow: 3px 3px 0 #880000;
+    font-size: 0.7rem;
+    transition: background-color 0.1s;
+}
+
+.sucesso-box button:hover {
+    background-color: #aa0000;
+}
