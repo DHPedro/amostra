@@ -1,16 +1,15 @@
-
 const crachasRankingEl = document.getElementById('crachas-ranking');
 const rankingContainerEl = document.getElementById('ranking-container');
 const sucessoContainerEl = document.getElementById('sucesso-container');
 const nomeSucessoEl = document.getElementById('nome-sucesso');
 
+const BASE_PATH = '/amostra'; 
+
 async function registrarAvaliacao(funcionarioSlug) {
     if (!funcionarioSlug) return;
 
-
     const ref = database.ref(`funcionarios/${funcionarioSlug}`);
     
-
     ref.transaction((funcionario) => {
         if (funcionario) {
             funcionario.avaliacoes = (funcionario.avaliacoes || 0) + 1;
@@ -29,8 +28,6 @@ async function registrarAvaliacao(funcionarioSlug) {
     });
 }
 
-
-
 function ouvirAtualizacoesDoRanking() {
     const ref = database.ref('funcionarios');
 
@@ -42,18 +39,15 @@ function ouvirAtualizacoesDoRanking() {
             return;
         }
 
-
         const arrayFuncionarios = Object.keys(dadosFuncionarios).map(key => {
             return {
-                slug: key,
+                slug: key, 
                 ...dadosFuncionarios[key]
             };
         });
 
-
         arrayFuncionarios.sort((a, b) => (b.avaliacoes || 0) - (a.avaliacoes || 0));
 
-        // Renderiza o ranking
         renderizarRanking(arrayFuncionarios);
 
     }, (error) => {
@@ -62,11 +56,10 @@ function ouvirAtualizacoesDoRanking() {
     });
 }
 
-
 function criarCrachaHTML(funcionario) {
     let iconesHTML = '';
     const numAvaliacoes = funcionario.avaliacoes || 0;
-
+    
     let tamanhoFonteEstrela = '1.2rem'; 
     
     if (numAvaliacoes >= 7 && numAvaliacoes <= 12) {
@@ -75,8 +68,6 @@ function criarCrachaHTML(funcionario) {
         tamanhoFonteEstrela = '0.7rem'; 
     }
     const styleEstrelas = `style="font-size: ${tamanhoFonteEstrela};"`;
-
-
 
     for (let i = 0; i < numAvaliacoes; i++) {
         iconesHTML += `<span class="pixel-icon" ${styleEstrelas}>⭐</span>`;
@@ -95,44 +86,43 @@ function criarCrachaHTML(funcionario) {
     `;
 }
 
-
 function renderizarRanking(dados) {
     let htmlContent = dados.map(criarCrachaHTML).join('');
     crachasRankingEl.innerHTML = htmlContent;
 }
 
 
-
 function verificarRota() {
+    let caminhoCompleto = window.location.pathname;
 
-    const path = window.location.pathname.split('/').filter(p => p);
+    if (caminhoCompleto.startsWith(BASE_PATH)) {
+        caminhoCompleto = caminhoCompleto.substring(BASE_PATH.length);
+    }
+
+    const path = caminhoCompleto.split('/').filter(p => p);
     
     if (path.length > 0) {
-
-        const funcionarioSlug = path[path.length - 1]; 
-
+        const funcionarioSlug = path[0]; 
 
         rankingContainerEl.classList.add('hidden');
         sucessoContainerEl.classList.remove('hidden');
 
-
         registrarAvaliacao(funcionarioSlug);
             
-
         const nomeFormatado = funcionarioSlug.replace(/-/g, ' ').toUpperCase();
-        nomeSucessoEl.textContent = `Avaliação feita com sucesso para: ${nomeFormatado}! Redirecionando em 3 segundos...`;
         
+        nomeSucessoEl.textContent = `Avaliação feita com sucesso para: ${nomeFormatado}! Redirecionando em 3 segundos...`;
 
         setTimeout(() => {
-            window.location.href = '/'; 
+            window.location.href = BASE_PATH + '/'; 
         }, 3000); 
         
     } else {
         sucessoContainerEl.classList.add('hidden');
         rankingContainerEl.classList.remove('hidden');
+        
         ouvirAtualizacoesDoRanking();
     }
 }
-
 
 document.addEventListener('DOMContentLoaded', verificarRota);
